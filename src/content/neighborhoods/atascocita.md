@@ -7,7 +7,7 @@ lifestyleHighlights:
   - "Golf courses and green spaces"
   - "Strong sense of community and local dining"
 silviaNote: "Atascocita is wonderful for families who love the outdoors. Being near Lake Houston gives everyday life a relaxed, vacation-like feeling — and there's a strong, welcoming community spirit to go with it."
-image: null
+image: /images/atascocita.jpg
 ---
 
 Atascocita is a favorite for families who like to be outside. With Lake Houston nearby, weekends can mean boating, fishing, or simply enjoying the water, and the area is dotted with parks, trails, and golf courses. It's the kind of place where an active, easygoing lifestyle comes naturally.

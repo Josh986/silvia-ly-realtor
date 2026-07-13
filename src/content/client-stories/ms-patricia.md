@@ -6,7 +6,7 @@ quote: "After 30 years in our family home, Silvia helped make the next chapter f
 featured: true
 privacy: "First name only"
 greenThumbNote: "Her new home has a beautiful front porch with morning light — perfect for her collection of succulents."
-image: null
+image: /images/ms-patricia.jpg
 ---
 After decades in the same home, she was ready for a simpler space — somewhere cozy, low-maintenance, and still very much her own. Leaving a house full of memories is never only a transaction; it's an emotional step, and she wanted to move at a pace that felt right.
 

@@ -6,7 +6,7 @@ quote: "We felt supported at every step. Silvia truly listened to what mattered 
 featured: true
 privacy: "First names / neighborhood only"
 greenThumbNote: "The sunny backyard had room for their first vegetable garden — they planted tomatoes the first weekend."
-image: null
+image: /images/garcia-family.jpg
 ---
 They had outgrown their starter home and were searching for more room to grow — a backyard their children could enjoy, a neighborhood close to good schools, and a kitchen where everyone could gather. What they wanted most was a place that could keep up with a busy, growing family for years to come.
 

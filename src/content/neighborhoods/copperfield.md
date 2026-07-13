@@ -7,7 +7,7 @@ lifestyleHighlights:
   - "Community pools, parks, and trails"
   - "Convenient shopping and commuter access"
 silviaNote: "Copperfield has that settled, taken-care-of feeling. It's a lovely fit for buyers who want community amenities and mature landscaping without losing a true neighborhood feel."
-image: null
+image: /images/copperfield.jpg
 ---
 
 Copperfield is a master-planned community that has aged beautifully. The trees are tall, the streets are tidy, and there's a comfortable, established rhythm to the neighborhoods here. Community pools, parks, and trails give families plenty of reasons to be outside and to get to know their neighbors.

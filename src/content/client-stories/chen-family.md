@@ -6,7 +6,7 @@ quote: "Moving across the country is stressful. Silvia made us feel like we alre
 featured: true
 privacy: "First names / neighborhood only"
 greenThumbNote: "Their new home came with a covered patio — perfect for the container herb garden they'd always wanted."
-image: null
+image: /images/chen-family.jpg
 ---
 Relocating from out of state, they needed a guide who understood Houston's neighborhoods and could help them feel at home in an unfamiliar city. Everything was new — the streets, the commute, the little day-to-day details that make a place feel livable — and they wanted someone who would take the time to explain it all.
 

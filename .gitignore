@@ -25,3 +25,6 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
+check_images.py
+*.docx
+*.pdf

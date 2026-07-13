@@ -7,7 +7,7 @@ lifestyleHighlights:
   - "Hometown charm and local events"
   - "Reasonable commute to northeast Houston"
 silviaNote: "Crosby is for folks who want a little land and a lot of peace. There's a genuine, welcoming spirit here that's hard to find — and a surprisingly reasonable commute back toward northeast Houston."
-image: null
+image: /images/crosby.jpg
 ---
 
 Crosby holds onto its rural, small-town roots in a way that feels increasingly rare so close to a major city. Properties tend to be larger, the pace is quiet, and there's plenty of open sky. For buyers craving room to breathe — space for a workshop, a garden, or a few animals — it's a real gem.

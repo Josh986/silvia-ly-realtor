@@ -7,7 +7,7 @@ lifestyleHighlights:
   - "Parks, trails, and recreational areas"
   - "Convenient access to shopping and dining"
 silviaNote: "Cypress has a wonderful sense of community. Many families find that once they put down roots here, they stay for years — you get real space and mature trees without giving up easy access to the rest of Houston."
-image: null
+image: /images/cypress.jpg
 ---
 
 Cypress is one of the areas I'm asked about most, and it's easy to see why. Families are drawn to the roomy neighborhoods, the tree-lined streets, and the sense that everyday life can slow down just a little here. Weekends fill up with youth sports, neighborhood get-togethers, and trips to nearby parks and trails.

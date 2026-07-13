@@ -7,7 +7,7 @@ lifestyleHighlights:
   - "Local shops and hometown events"
   - "Easy reach to Pearland and the medical center corridor"
 silviaNote: "Alvin feels like a place where neighbors still wave hello. It's perfect for families who want a bit more space, a slower pace, and a lot of heart — while staying within reach of Pearland and the medical center."
-image: null
+image: /images/alvin.jpg
 ---
 
 Alvin has kept its small-town character even as the Houston area has grown up around it. Streets feel calmer, lots tend to be larger, and there's a real hometown pride you notice at local events and Friday-night games. For buyers who feel boxed in by the pace of the city, it's a breath of fresh air.
