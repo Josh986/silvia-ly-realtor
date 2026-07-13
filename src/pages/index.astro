@@ -1,0 +1,144 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import ClientStoryCard from '../components/ClientStoryCard.astro';
+import NeighborhoodCard from '../components/NeighborhoodCard.astro';
+import GreenThumbNote from '../components/GreenThumbNote.astro';
+import { siteConfig } from '../config/site';
+
+const stories = (await getCollection('client-stories'))
+  .filter((s) => s.data.featured)
+  .slice(0, 3);
+
+const neighborhoods = (await getCollection('neighborhoods')).slice(0, 5);
+---
+<Layout>
+  <Hero
+    headline="Helping Houston families find a place to put down roots."
+    subheadline="I'm Silvia Ly, a Texas REALTOR® who believes finding a home is about more than square footage — it's about finding where your life can grow."
+    primaryCta={{ label: 'Talk with Silvia', href: '/contact' }}
+    secondaryCta={{ label: 'Meet Silvia', href: '/meet-silvia' }}
+  />
+
+  <!-- Introduction -->
+  <section class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 lg:px-8">
+    <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">I'm Silvia — and I'd love to help.</h2>
+    <p class="mt-6 text-lg leading-relaxed text-charcoal-700">
+      Buying or selling a home is one of life's biggest moments. My promise is simple: to listen
+      first, guide with patience, and treat your family the way I'd want mine to be treated. Whether
+      you're planting roots for the first time or beginning a new chapter, I'm here to walk with you.
+    </p>
+    <div class="mt-8 flex justify-center gap-4">
+      <Button href="/roots-and-new-beginnings" variant="outline">See Client Stories</Button>
+    </div>
+  </section>
+
+  <!-- Featured Client Stories -->
+  <section class="bg-sage-50/60 py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">Roots & New Beginnings</h2>
+        <p class="mt-4 text-charcoal-700">
+          A few of the families I've had the honor of helping find their place in Houston.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-3">
+        {
+          stories.map((story) => (
+            <ClientStoryCard
+              displayName={story.data.displayName}
+              neighborhood={story.data.neighborhood}
+              category={story.data.category}
+              quote={story.data.quote}
+              image={story.data.image}
+            />
+          ))
+        }
+      </div>
+      <div class="mt-10 text-center">
+        <Button href="/roots-and-new-beginnings" variant="primary">Read More Stories</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buy / Sell split -->
+  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-2">
+      <div class="rounded-2xl border border-sage-100 bg-cream-50 p-8 shadow-sm">
+        <h3 class="font-serif text-2xl text-sage-900">Buying a Home</h3>
+        <p class="mt-3 text-charcoal-700">
+          From your first tour to closing day, I'll help you find a home that fits your family and
+          your future — without the pressure.
+        </p>
+        <div class="mt-6">
+          <Button href="/buy-a-home" variant="outline">How I Help Buyers</Button>
+        </div>
+      </div>
+      <div class="rounded-2xl border border-terracotta-100 bg-terracotta-50 p-8 shadow-sm">
+        <h3 class="font-serif text-2xl text-terracotta-800">Selling Your Home</h3>
+        <p class="mt-3 text-charcoal-700">
+          A thoughtful, well-prepared plan to help your home shine and move on to its next chapter
+          with confidence.
+        </p>
+        <div class="mt-6">
+          <Button href="/sell-your-home" variant="secondary">How I Help Sellers</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neighborhood preview -->
+  <section class="bg-cream-100/60 py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">Houston Neighborhoods</h2>
+        <p class="mt-4 text-charcoal-700">A few of the communities I know and love.</p>
+      </div>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          neighborhoods.map((n) => (
+            <NeighborhoodCard
+              name={n.data.name}
+              slug={n.slug}
+              intro={n.data.intro}
+              lifestyleHighlights={n.data.lifestyleHighlights}
+              silviaNote={n.data.silviaNote}
+              image={n.data.image}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Green Thumb Note -->
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <GreenThumbNote
+      text="A home, like a garden, does best when it's given a little light, a little care, and time to grow. That's how I like to approach every move — patiently, and with heart."
+    />
+  </section>
+
+  <!-- Final CTA -->
+  <section class="bg-sage-800 py-20 text-center text-cream-50">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl sm:text-4xl">Let's talk about what's next.</h2>
+      <p class="mt-4 text-cream-200">
+        Whether you're ready to start or just have a question, I'd love to hear from you.
+      </p>
+      <div class="mt-8 flex justify-center gap-4">
+        <Button href="/contact" variant="primary">Talk with Silvia</Button>
+        <Button
+          href={siteConfig.contact.har}
+          variant="outline"
+          class="border-cream-100 text-cream-50 hover:bg-sage-700"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          HAR Profile
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,31 @@
+<svg xmlns="https://i.etsystatic.com/50432293/r/il/1812f3/5866765524/il_1080xN.5866765524_3k0e.jpg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Placeholder neighborhood image with a Houston skyline suggestion">
+  <defs>
+    <linearGradient id="hoodBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbe7de"/>
+      <stop offset="60%" stop-color="#f4f7f2"/>
+      <stop offset="100%" stop-color="#e7f0e3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#hoodBg)"/>
+  <!-- sun -->
+  <circle cx="640" cy="120" r="52" fill="#efa993" opacity="0.55"/>
+  <!-- skyline -->
+  <g fill="#3d5b35" opacity="0.85">
+    <rect x="120" y="250" width="50" height="150"/>
+    <rect x="185" y="200" width="42" height="200"/>
+    <rect x="240" y="230" width="36" height="170"/>
+    <rect x="288" y="160" width="54" height="240"/>
+    <polygon points="315,160 315,120 335,120 335,160"/>
+    <rect x="356" y="210" width="40" height="190"/>
+    <rect x="410" y="255" width="46" height="145"/>
+    <rect x="470" y="185" width="50" height="215"/>
+    <rect x="534" y="235" width="38" height="165"/>
+    <rect x="586" y="270" width="48" height="130"/>
+  </g>
+  <!-- ground -->
+  <rect x="0" y="400" width="800" height="100" fill="#85aa79" opacity="0.5"/>
+  <!-- leaf accent -->
+  <g fill="#628f57">
+    <path d="M700 400 c18 -8 32 -26 36 -48 c-22 4 -38 16 -44 40 z"/>
+  </g>
+</svg>

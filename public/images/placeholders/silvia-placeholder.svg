@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700" role="img" aria-label="Placeholder portrait of Silvia">
+  <defs>
+    <linearGradient id="portraitBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e7f0e3"/>
+      <stop offset="100%" stop-color="#cfe1c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="700" fill="url(#portraitBg)"/>
+  <!-- circular frame -->
+  <circle cx="300" cy="300" r="200" fill="#f4f7f2" stroke="#85aa79" stroke-width="6"/>
+  <!-- simple person silhouette -->
+  <g fill="#adc9a1">
+    <circle cx="300" cy="255" r="70"/>
+    <path d="M180 430 C180 350 240 335 300 335 C360 335 420 350 420 430 Z"/>
+  </g>
+  <!-- botanical sprig accent -->
+  <g stroke="#4d7243" stroke-width="5" fill="none" stroke-linecap="round">
+    <path d="M300 620 C300 560 320 525 360 505"/>
+  </g>
+  <g fill="#628f57">
+    <path d="M360 505 c16 -6 30 -22 34 -42 c-20 2 -36 14 -42 34 z"/>
+    <path d="M312 560 c-16 -6 -30 -22 -34 -42 c20 2 36 14 42 34 z"/>
+    <path d="M300 620 c14 -8 24 -24 26 -44 c-18 4 -30 18 -34 38 z"/>
+  </g>
+  <text x="300" y="672" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#3d5b35" opacity="0.8">Silvia Ly</text>
+</svg>

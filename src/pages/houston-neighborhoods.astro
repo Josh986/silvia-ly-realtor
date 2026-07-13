@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import NeighborhoodCard from '../components/NeighborhoodCard.astro';
+
+const neighborhoods = (await getCollection('neighborhoods')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+---
+<Layout
+  title="Houston Neighborhoods"
+  description="Explore Houston-area neighborhoods with a local REALTOR® who knows and loves them."
+>
+  <section class="bg-sage-50/60">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+      <h1 class="font-serif text-4xl text-sage-900 sm:text-5xl">Houston Neighborhoods</h1>
+      <p class="mt-6 text-lg text-charcoal-700">
+        Every neighborhood has its own personality. Here are a few communities I know well — and would
+        love to help you explore.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        neighborhoods.map((n) => (
+          <NeighborhoodCard
+            name={n.data.name}
+            slug={n.slug}
+            intro={n.data.intro}
+            lifestyleHighlights={n.data.lifestyleHighlights}
+            silviaNote={n.data.silviaNote}
+            image={n.data.image}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Layout>

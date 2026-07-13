@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import GreenThumbNote from '../components/GreenThumbNote.astro';
+
+const qa = [
+  {
+    q: 'What does home mean to you?',
+    a: 'Home is where your life takes root — where the everyday moments happen. Helping someone find that place is a privilege I never take lightly. [PLACEHOLDER — update with Silvia\'s own words]',
+  },
+  {
+    q: 'What do you enjoy most about being a REALTOR®?',
+    a: 'The people. I love getting to know families, understanding what they need, and celebrating with them on closing day. [PLACEHOLDER]',
+  },
+  {
+    q: 'Favorite Houston spot?',
+    a: 'There are so many, but a quiet morning at a local park or farmers market is hard to beat. [PLACEHOLDER — update with a real favorite]',
+  },
+  {
+    q: 'Favorite plant?',
+    a: 'I have a soft spot for anything that thrives with a little care — pothos, herbs on the windowsill, and a stubborn fiddle-leaf fig. [PLACEHOLDER]',
+  },
+];
+---
+<Layout
+  title="Meet Silvia"
+  description="Get to know Silvia Ly — a Texas REALTOR® serving Houston families with warmth, patience, and care."
+>
+  <!-- Hero -->
+  <section class="bg-sage-50/60">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-wider text-sage-600">Meet Silvia</p>
+        <h1 class="mt-3 font-serif text-4xl text-sage-900 sm:text-5xl">
+          A patient guide for one of life's biggest moments.
+        </h1>
+        <p class="mt-6 text-lg text-charcoal-700">{
+          "I became a REALTOR® because I love helping people feel at home. Every family's story is different, and I take the time to understand yours."
+        }</p>
+        <div class="mt-8">
+          <Button href="/contact" variant="primary">Talk with Silvia</Button>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-md">
+        <img
+          src="/images/placeholders/silvia-placeholder.svg"
+          alt="Portrait of Silvia Ly (placeholder)"
+          class="w-full rounded-2xl border border-sage-100 shadow-sm"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio -->
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="font-serif text-3xl text-sage-900">A little about me</h2>
+    <div class="mt-6 space-y-4 text-lg leading-relaxed text-charcoal-700">
+      <p>
+        I'm Silvia Ly, a Texas REALTOR® serving the greater Houston area. My approach is simple: I
+        listen first, move at your pace, and make sure you feel informed and cared for at every step.
+        [PLACEHOLDER — replace with Silvia's full bio in her own words.]
+      </p>
+      <p>
+        Whether you're buying your very first home, growing into more space, or beginning a new
+        chapter, I'm here to make the journey feel a little lighter — and maybe even joyful.
+      </p>
+    </div>
+  </section>
+
+  <!-- Q&A -->
+  <section class="bg-cream-100/60 py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl text-sage-900">A few questions</h2>
+      <dl class="mt-8 space-y-8">
+        {
+          qa.map((item) => (
+            <div class="border-l-2 border-sage-300 pl-5">
+              <dt class="font-serif text-xl text-sage-800">{item.q}</dt>
+              <dd class="mt-2 text-charcoal-700">{item.a}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Plant love -->
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="font-serif text-3xl text-sage-900">On plants (and patience)</h2>
+    <p class="mt-6 text-lg leading-relaxed text-charcoal-700">
+      When I'm not helping clients, you'll probably find me tending to my plants. There's something
+      about nurturing living things that mirrors the way I like to help people find a home —
+      thoughtfully, gently, and with an eye on how everything will grow.
+    </p>
+    <GreenThumbNote
+      text="Every home has a spot that's just right for a plant. Finding it is half the fun of settling in."
+    />
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-sage-800 py-16 text-center text-cream-50">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl">I'd love to hear your story.</h2>
+      <div class="mt-8">
+        <Button href="/contact" variant="primary">Get in Touch</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { siteConfig } from '../config/site';
+---
+<Layout
+  title="Contact"
+  description="Reach out to Silvia Ly — a warm, low-pressure conversation about your next move in Houston."
+>
+  <section class="bg-sage-50/60">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+      <h1 class="font-serif text-4xl text-sage-900 sm:text-5xl">Let's talk about what's next.</h1>
+      <p class="mt-6 text-lg text-charcoal-700">
+        No pressure, no obligation — just a friendly conversation. Whether you're ready to move or
+        simply have a question, I'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <h2 class="font-serif text-2xl text-sage-900">Send a message</h2>
+        <div class="mt-6"><ContactForm /></div>
+      </div>
+
+      <aside class="rounded-2xl border border-sage-100 bg-cream-50 p-6 shadow-sm">
+        <h2 class="font-serif text-xl text-sage-900">Other ways to reach me</h2>
+        <dl class="mt-5 space-y-4 text-sm">
+          <div>
+            <dt class="font-medium text-charcoal-800">Phone</dt>
+            <dd class="mt-1 text-charcoal-600" set:html={siteConfig.contact.phone} />
+          </div>
+          <div>
+            <dt class="font-medium text-charcoal-800">Email</dt>
+            <dd class="mt-1 break-words text-charcoal-600" set:html={siteConfig.contact.email} />
+          </div>
+          <div>
+            <dt class="font-medium text-charcoal-800">HAR Profile</dt>
+            <dd class="mt-1">
+              <a
+                href={siteConfig.contact.har}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sage-700 underline underline-offset-4 hover:text-sage-800"
+              >
+                View on HAR.com
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-medium text-charcoal-800">Schedule a chat</dt>
+            <dd class="mt-1 text-charcoal-600" set:html={siteConfig.contact.calendar} />
+          </div>
+        </dl>
+        <p class="mt-6 text-xs text-charcoal-500">
+          I try to respond to every message personally, usually within one business day.
+        </p>
+      </aside>
+    </div>
+  </section>
+</Layout>

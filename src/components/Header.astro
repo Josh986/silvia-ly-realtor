@@ -1,0 +1,66 @@
+---
+import { navLinks } from '../config/site';
+import Button from './Button.astro';
+import MobileMenu from './MobileMenu.astro';
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+<header
+  id="site-header"
+  class="sticky top-0 z-30 border-b border-sage-100 bg-cream-50/90 backdrop-blur transition-shadow"
+>
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <a href="/" class="font-serif text-2xl font-semibold text-sage-800 hover:text-sage-700">
+      Silvia Ly
+    </a>
+
+    <nav class="hidden items-center gap-6 lg:flex" aria-label="Primary">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm transition-colors hover:text-sage-700',
+              isActive(link.href) ? 'text-sage-700 font-medium' : 'text-charcoal-700',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="hidden lg:block">
+      <Button href="/contact" variant="primary">Talk with Silvia</Button>
+    </div>
+
+    <button
+      id="mobile-menu-open"
+      class="rounded-full p-2 text-charcoal-800 hover:bg-sage-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-500 lg:hidden"
+      aria-label="Open menu"
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+    </button>
+  </div>
+
+  <MobileMenu />
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if (window.scrollY > 8) {
+      header?.classList.add('shadow-sm');
+    } else {
+      header?.classList.remove('shadow-sm');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

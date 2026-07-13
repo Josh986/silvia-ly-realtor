@@ -1,0 +1,29 @@
+---
+interface Props {
+  text: string;
+  label?: string;
+}
+
+const { text, label = "Silvia's Green Thumb Note" } = Astro.props;
+---
+<aside class="my-6 rounded-r-lg border-l-4 border-sage-500 bg-sage-50 py-5 pl-5 pr-6">
+  <div class="flex items-center gap-2">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="text-sage-600"
+      aria-hidden="true"
+    >
+      <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-11 1 6-1 12-2 18z" />
+      <path d="M11 20c0-4 2-8 6-10" />
+    </svg>
+    <span class="text-xs font-semibold uppercase tracking-wider text-sage-700">{label}</span>
+  </div>
+  <p class="mt-2 font-serif text-lg italic leading-relaxed text-sage-900">{text}</p>
+</aside>

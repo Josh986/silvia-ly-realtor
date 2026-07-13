@@ -1,0 +1,52 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  headline: string;
+  subheadline?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const { headline, subheadline, primaryCta, secondaryCta } = Astro.props;
+---
+<section class="relative overflow-hidden">
+  <!-- gradient + botanical background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-sage-100 via-cream-50 to-cream-100"></div>
+  <div
+    class="absolute inset-0 opacity-60"
+    style="background-image: url('/images/placeholders/hero-placeholder.svg'); background-size: cover; background-position: center;"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="absolute inset-0 bg-cream-50/40"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+    <div class="max-w-2xl">
+      <h1 class="font-serif text-4xl leading-tight text-sage-900 sm:text-5xl lg:text-6xl">
+        {headline}
+      </h1>
+      {
+        subheadline && (
+          <p class="mt-6 max-w-xl text-lg text-charcoal-700">{subheadline}</p>
+        )
+      }
+      {
+        (primaryCta || secondaryCta) && (
+          <div class="mt-10 flex flex-wrap gap-4">
+            {primaryCta && (
+              <Button href={primaryCta.href} variant="primary">
+                {primaryCta.label}
+              </Button>
+            )}
+            {secondaryCta && (
+              <Button href={secondaryCta.href} variant="outline">
+                {secondaryCta.label}
+              </Button>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

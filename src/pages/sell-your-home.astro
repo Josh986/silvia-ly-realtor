@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import ProcessTimeline from '../components/ProcessTimeline.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const steps = [
+  { title: 'A conversation first', description: 'We\'ll talk about your goals, your timeline, and what a successful move looks like for you.' },
+  { title: 'Prepare with care', description: 'I\'ll offer thoughtful, practical suggestions to help your home show its best — without overwhelming projects.' },
+  { title: 'Price with insight', description: 'Using local market data, we\'ll set a price that\'s both competitive and true to your home\'s value.' },
+  { title: 'Market beautifully', description: 'Quality photos and honest, warm marketing to reach the right buyers.' },
+  { title: 'Negotiate & close', description: 'I\'ll guide you through offers and details, all the way to a smooth closing.' },
+];
+---
+<Layout
+  title="Sell Your Home"
+  description="A thoughtful, well-prepared plan to sell your Houston home with Silvia Ly, Texas REALTOR®."
+>
+  <section class="bg-terracotta-50">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+      <h1 class="font-serif text-4xl text-terracotta-800 sm:text-5xl">A thoughtful plan for your next move.</h1>
+      <p class="mt-6 text-lg text-charcoal-700">
+        Selling a home is a big step — often an emotional one. I'll help you prepare, price, and move
+        forward with clarity and confidence.
+      </p>
+      <div class="mt-8">
+        <Button href="#value-conversation" variant="secondary">Request a Home Value Conversation</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream-100/60 py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl text-sage-900">How I help you sell</h2>
+      <div class="mt-10"><ProcessTimeline steps={steps} /></div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="rounded-2xl border border-sage-100 bg-sage-50 p-8 text-center">
+      <h2 class="font-serif text-2xl text-sage-900">Complimentary Home Value Conversation</h2>
+      <p class="mt-3 text-charcoal-700">
+        I offer a no-obligation conversation about what your home may be worth in today's market,
+        including a comparative market analysis (CMA). [PLACEHOLDER — confirm offering details before launch.]
+      </p>
+    </div>
+  </section>
+
+  <section id="value-conversation" class="bg-cream-100/60 py-16">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl text-sage-900">Request a Home Value Conversation</h2>
+      <p class="mt-3 text-charcoal-700">Tell me a little about your home and I'll be in touch.</p>
+      <div class="mt-8"><ContactForm /></div>
+    </div>
+  </section>
+</Layout>

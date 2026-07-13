@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ClientStoryCard from '../components/ClientStoryCard.astro';
+import GreenThumbNote from '../components/GreenThumbNote.astro';
+
+const stories = await getCollection('client-stories');
+
+const categories = [
+  'All',
+  'First Home',
+  'Growing Family',
+  'Selling & Moving On',
+  'Downsizing',
+  'New to Houston',
+];
+---
+<Layout
+  title="Roots & New Beginnings"
+  description="Real stories of Houston families finding their place — shared with permission and care."
+>
+  <section class="bg-sage-50/60">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+      <h1 class="font-serif text-4xl text-sage-900 sm:text-5xl">Roots & New Beginnings</h1>
+      <p class="mt-6 text-lg text-charcoal-700">
+        Every family's journey is different. These are a few of the moves I've had the honor to be
+        part of.
+      </p>
+      <p class="mt-4 rounded-lg bg-cream-100 px-4 py-3 text-sm text-charcoal-600">
+        Client privacy matters. Stories are shared only with permission, using first names and
+        neighborhoods. [Sample stories shown — replace with approved client content before launch.]
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <!-- Filter buttons -->
+    <div class="flex flex-wrap justify-center gap-2" role="group" aria-label="Filter stories by category">
+      {
+        categories.map((cat, i) => (
+          <button
+            class:list={[
+              'filter-btn rounded-full px-4 py-2 text-sm font-medium transition-colors',
+              i === 0 ? 'bg-sage-600 text-cream-50' : 'bg-sage-100 text-sage-700 hover:bg-sage-200',
+            ]}
+            data-filter={cat}
+          >
+            {cat}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Grid -->
+    <div id="story-grid" class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {
+        stories.map((story) => (
+          <div class="story-item" data-category={story.data.category}>
+            <ClientStoryCard
+              displayName={story.data.displayName}
+              neighborhood={story.data.neighborhood}
+              category={story.data.category}
+              quote={story.data.quote}
+              image={story.data.image}
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <p id="no-results" class="mt-10 hidden text-center text-charcoal-500">
+      No stories in this category yet — more coming soon.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6 lg:px-8">
+    <GreenThumbNote
+      text="Every family plants something different when they find their home. Watching those roots take hold is the best part of my work."
+    />
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const items = document.querySelectorAll<HTMLElement>('.story-item');
+    const noResults = document.getElementById('no-results');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        buttons.forEach((b) => {
+          b.classList.remove('bg-sage-600', 'text-cream-50');
+          b.classList.add('bg-sage-100', 'text-sage-700', 'hover:bg-sage-200');
+        });
+        btn.classList.add('bg-sage-600', 'text-cream-50');
+        btn.classList.remove('bg-sage-100', 'text-sage-700', 'hover:bg-sage-200');
+
+        let visible = 0;
+        items.forEach((item) => {
+          const match = filter === 'All' || item.dataset.category === filter;
+          item.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+        noResults?.classList.toggle('hidden', visible > 0);
+      });
+    });
+  </script>
+</Layout>

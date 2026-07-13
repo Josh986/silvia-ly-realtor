@@ -1,0 +1,46 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  name: string;
+  slug: string;
+  intro: string;
+  lifestyleHighlights: string[];
+  silviaNote: string;
+  image?: string | null;
+}
+
+const { name, slug, intro, lifestyleHighlights, silviaNote, image } = Astro.props;
+const imgSrc = image ?? '/images/placeholders/neighborhood-placeholder.svg';
+---
+<article
+  class="flex h-full flex-col overflow-hidden rounded-2xl border border-sage-100 bg-cream-50 shadow-sm transition-shadow hover:shadow-md"
+>
+  <div class="aspect-[8/5] overflow-hidden bg-cream-100">
+    <img src={imgSrc} alt={`${name} neighborhood`} loading="lazy" class="h-full w-full object-cover" />
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <h3 class="font-serif text-2xl text-sage-900">{name}</h3>
+    <p class="mt-2 text-sm text-charcoal-700">{intro}</p>
+
+    <ul class="mt-4 space-y-1.5">
+      {
+        lifestyleHighlights.slice(0, 3).map((item) => (
+          <li class="flex items-start gap-2 text-sm text-charcoal-700">
+            <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sage-500" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-4 border-l-2 border-sage-300 pl-3 text-sm italic text-sage-800">{silviaNote}</p>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <Button href={`/neighborhoods/${slug}`} variant="outline" class="text-xs">
+        Explore {name}
+      </Button>
+      <Button href="/contact" variant="primary" class="text-xs">Ask Silvia</Button>
+    </div>
+  </div>
+</article>

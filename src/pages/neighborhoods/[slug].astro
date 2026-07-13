@@ -1,0 +1,64 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/Button.astro';
+import GreenThumbNote from '../../components/GreenThumbNote.astro';
+
+export async function getStaticPaths() {
+  const neighborhoods = await getCollection('neighborhoods');
+  return neighborhoods.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'neighborhoods'>;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const imgSrc = data.image ?? '/images/placeholders/neighborhood-placeholder.svg';
+---
+<Layout title={`${data.name} Neighborhood`} description={data.intro}>
+  <section class="bg-sage-50/60">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <div>
+        <a href="/houston-neighborhoods" class="text-sm text-sage-600 hover:text-sage-700">
+          &larr; All neighborhoods
+        </a>
+        <h1 class="mt-3 font-serif text-4xl text-sage-900 sm:text-5xl">{data.name}</h1>
+        <p class="mt-4 text-lg text-charcoal-700">{data.intro}</p>
+      </div>
+      <div>
+        <img src={imgSrc} alt={`${data.name} neighborhood`} class="w-full rounded-2xl border border-sage-100 shadow-sm" />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="font-serif text-2xl text-sage-900">Who it fits</h2>
+    <p class="mt-3 text-charcoal-700">{data.whoItFits}</p>
+
+    <h2 class="mt-10 font-serif text-2xl text-sage-900">Lifestyle highlights</h2>
+    <ul class="mt-4 space-y-2">
+      {
+        data.lifestyleHighlights.map((item) => (
+          <li class="flex items-start gap-3 text-charcoal-700">
+            <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sage-500" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10">
+      <GreenThumbNote text={data.silviaNote} label="Silvia's Note" />
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-4">
+      <Button href="/contact" variant="primary">Ask Silvia about {data.name}</Button>
+      <Button href="/houston-neighborhoods" variant="outline">See More Neighborhoods</Button>
+    </div>
+  </section>
+</Layout>
