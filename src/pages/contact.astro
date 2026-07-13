@@ -29,11 +29,25 @@ import { siteConfig } from '../config/site';
         <dl class="mt-5 space-y-4 text-sm">
           <div>
             <dt class="font-medium text-charcoal-800">Phone</dt>
-            <dd class="mt-1 text-charcoal-600" set:html={siteConfig.contact.phone} />
+            <dd class="mt-1">
+              <a
+                href={`tel:${siteConfig.contact.phone.replace(/[^\d+]/g, '')}`}
+                class="text-sage-700 underline underline-offset-4 hover:text-sage-800"
+              >
+                {siteConfig.contact.phone}
+              </a>
+            </dd>
           </div>
           <div>
             <dt class="font-medium text-charcoal-800">Email</dt>
-            <dd class="mt-1 break-words text-charcoal-600" set:html={siteConfig.contact.email} />
+            <dd class="mt-1 break-words">
+              <a
+                href={`mailto:${siteConfig.contact.email}`}
+                class="text-sage-700 underline underline-offset-4 hover:text-sage-800"
+              >
+                {siteConfig.contact.email}
+              </a>
+            </dd>
           </div>
           <div>
             <dt class="font-medium text-charcoal-800">HAR Profile</dt>
@@ -50,7 +64,16 @@ import { siteConfig } from '../config/site';
           </div>
           <div>
             <dt class="font-medium text-charcoal-800">Schedule a chat</dt>
-            <dd class="mt-1 text-charcoal-600" set:html={siteConfig.contact.calendar} />
+            <dd class="mt-1">
+              <a
+                href={siteConfig.contact.calendar}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sage-700 underline underline-offset-4 hover:text-sage-800"
+              >
+                Book a time to talk
+              </a>
+            </dd>
           </div>
         </dl>
         <p class="mt-6 text-xs text-charcoal-500">
