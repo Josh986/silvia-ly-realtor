@@ -12,7 +12,10 @@ const { title, description, image } = Astro.props;
 const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.title;
 const pageDescription = description ?? siteConfig.description;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.url).href;
-const ogImage = new URL(image ?? '/images/placeholders/hero-placeholder.svg', Astro.site ?? siteConfig.url).href;
+// Build a base-aware, absolute URL for the social-share image.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ogImagePath = image ?? `${base}/images/hero-houston-home.jpg`;
+const ogImage = new URL(ogImagePath, Astro.site ?? siteConfig.url).href;
 ---
 <title>{pageTitle}</title>
 <meta name="description" content={pageDescription} />
