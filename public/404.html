@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silvia Ly | Houston REALTOR®</title>
+    <link rel="icon" type="image/svg+xml" href="/silvia-ly-realtor/favicon.svg" />
+    <!--
+      Smart 404 fallback for GitHub Pages.
+      The site is a single-page experience served from /silvia-ly-realtor/.
+      Any unknown path (including old multi-page routes and stale bookmarks)
+      lands here and is redirected to the correct section of the homepage so
+      visitors never see a dead end.
+    -->
+    <script>
+      (function () {
+        var BASE = '/silvia-ly-realtor/';
+
+        // Map old/legacy routes to the matching section anchor on the single page.
+        var routeMap = {
+          'meet-silvia': 'about',
+          'about': 'about',
+          'roots-and-new-beginnings': 'stories',
+          'stories': 'stories',
+          'buy-a-home': 'services',
+          'sell-your-home': 'services',
+          'services': 'services',
+          'buy-sell': 'services',
+          'houston-neighborhoods': 'neighborhoods',
+          'neighborhoods': 'neighborhoods',
+          'plant-notes': 'notes',
+          'notes': 'notes',
+          'contact': 'contact'
+        };
+
+        var path = window.location.pathname
+          .replace(BASE, '')
+          .replace(/^\/+|\/+$/g, '')
+          .toLowerCase();
+
+        // Strip a trailing "index.html" or nested segments down to the first token.
+        var firstSegment = path.split('/')[0].replace(/\.html?$/, '');
+
+        var anchor = routeMap[firstSegment];
+        var target = BASE + (anchor ? '#' + anchor : '');
+
+        // Replace so the broken URL doesn't stay in browser history.
+        window.location.replace(target);
+      })();
+    </script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #fdfbf5;
+        color: #4b5a45;
+        font-family:
+          'Inter',
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+      }
+      .wrap {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+      .leaf {
+        width: 56px;
+        height: 56px;
+        color: #7c9473;
+        margin-bottom: 1.25rem;
+      }
+      h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-weight: 600;
+        font-size: 1.75rem;
+        margin: 0 0 0.5rem;
+        color: #3f4d3a;
+      }
+      p {
+        margin: 0 0 1.5rem;
+        color: #6b7280;
+        max-width: 28rem;
+        line-height: 1.6;
+      }
+      a.btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #7c9473;
+        color: #fdfbf5;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      a.btn:hover {
+        background: #66795f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <svg
+        class="leaf"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-11 1 6-1 12-2 18z" />
+        <path d="M11 20c0-4 2-8 6-10" />
+      </svg>
+      <h1>Taking you home…</h1>
+      <p>
+        That page has moved — everything now lives on one page. Redirecting you
+        to Silvia's homepage.
+      </p>
+      <a class="btn" href="/silvia-ly-realtor/">Go to homepage</a>
+    </div>
+  </body>
+</html>
