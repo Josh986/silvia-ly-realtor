@@ -38,6 +38,6 @@ export const navLinks = [
   { label: 'Stories', href: '#stories' },
   { label: 'Buy & Sell', href: '#services' },
   { label: 'Neighborhoods', href: '#neighborhoods' },
-  { label: 'Notes', href: '#notes' },
+  { label: 'Garden 🌿', href: '#garden' },
   { label: 'Contact', href: '#contact' },
 ] as const;
