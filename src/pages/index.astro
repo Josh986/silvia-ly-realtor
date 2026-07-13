@@ -1,144 +1,520 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Button from '../components/Button.astro';
-import ClientStoryCard from '../components/ClientStoryCard.astro';
-import NeighborhoodCard from '../components/NeighborhoodCard.astro';
-import GreenThumbNote from '../components/GreenThumbNote.astro';
+import ContactForm from '../components/ContactForm.astro';
 import { siteConfig } from '../config/site';
 
-const stories = (await getCollection('client-stories'))
-  .filter((s) => s.data.featured)
-  .slice(0, 3);
+// ---- Content ----
+const stories = (await getCollection('client-stories')).sort((a, b) =>
+  a.data.displayName.localeCompare(b.data.displayName),
+);
+const neighborhoods = (await getCollection('neighborhoods')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+const notes = (await getCollection('plant-notes')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 
-const neighborhoods = (await getCollection('neighborhoods')).slice(0, 5);
+const storyCategories = ['All', ...new Set(stories.map((s) => s.data.category))];
+
+// Q&A (AI-generated sample copy in Silvia's voice — replace before launch)
+const qa = [
+  {
+    q: 'What does home mean to you?',
+    a: 'Home is where your life takes root — the porch you have your morning coffee on, the kitchen where everyone ends up, the yard the kids come to know by heart. Helping someone find that place is a privilege I never take lightly.',
+  },
+  {
+    q: 'What do you enjoy most about being a REALTOR®?',
+    a: 'The people, always. I love the moment a family walks into a house and I can see it click — this is the one. Getting to know what matters to each family and handing over the keys on closing day never gets old.',
+  },
+  {
+    q: 'Favorite part of Houston?',
+    a: 'I love how Houston is really a collection of small communities, each with its own personality. A slow Saturday at a neighborhood farmers market, a walk under the big shade trees, and a good taco afterward is about as perfect a day as I can imagine.',
+  },
+  {
+    q: 'Favorite plant to care for?',
+    a: 'Anything that rewards a little patience — pothos trailing off a shelf, fresh herbs on the windowsill, and one stubborn fiddle-leaf fig that keeps me humble. Caring for them is my favorite way to slow down and reset.',
+  },
+];
+
+const buyerTypes = [
+  { title: 'First-time buyers', desc: 'New to the process and want a patient, clear guide.' },
+  { title: 'Growing families', desc: 'Ready for more space, better schools, or a bigger yard.' },
+  { title: 'New to Houston', desc: 'Relocating and getting to know the area for the first time.' },
+  { title: 'Move-up buyers', desc: 'Looking for the next chapter after your starter home.' },
+];
+
+const buySteps = [
+  { title: "Let's talk", description: 'A relaxed conversation about your goals, timeline, and what home means to you.' },
+  { title: 'Get ready', description: "I'll connect you with trusted lenders and help you understand your budget." },
+  { title: 'Find the one', description: "We tour homes together, and I'll help you see the details that matter most." },
+  { title: 'Make an offer', description: "I'll guide a strong, thoughtful offer and negotiate on your behalf." },
+  { title: 'Welcome home', description: "From inspection to closing, I'm with you until you have the keys." },
+];
+
+const sellSteps = [
+  { title: 'A conversation first', description: "We'll talk about your goals, timeline, and what a successful move looks like." },
+  { title: 'Prepare with care', description: 'Thoughtful, practical suggestions to help your home show its best.' },
+  { title: 'Price with insight', description: "Using local data, we'll set a price that's competitive and true to your home." },
+  { title: 'Market beautifully', description: 'Quality photos and honest, warm marketing to reach the right buyers.' },
+  { title: 'Negotiate & close', description: "I'll guide you through offers and details, all the way to a smooth closing." },
+];
+
+const telHref = `tel:${siteConfig.contact.phone.replace(/[^\d+]/g, '')}`;
+const mailHref = `mailto:${siteConfig.contact.email}`;
 ---
 <Layout>
-  <Hero
-    headline="Helping Houston families find a place to put down roots."
-    subheadline="I'm Silvia Ly, a Texas REALTOR® who believes finding a home is about more than square footage — it's about finding where your life can grow."
-    primaryCta={{ label: 'Talk with Silvia', href: '/contact' }}
-    secondaryCta={{ label: 'Meet Silvia', href: '/meet-silvia' }}
-  />
+  <!-- ============================ HERO ============================ -->
+  <section id="top" class="relative overflow-hidden">
+    <!-- Parallax gradient + botanical layers -->
+    <div class="absolute inset-0 bg-gradient-to-br from-sage-100 via-cream-50 to-cream-100"></div>
+    <div
+      id="hero-parallax"
+      class="absolute inset-0 opacity-60"
+      style="background-image: url('/images/placeholders/hero-placeholder.svg'); background-size: cover; background-position: center; will-change: transform;"
+      aria-hidden="true"
+    ></div>
+    <div class="absolute inset-0 bg-cream-50/40"></div>
 
-  <!-- Introduction -->
-  <section class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 lg:px-8">
-    <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">I'm Silvia — and I'd love to help.</h2>
-    <p class="mt-6 text-lg leading-relaxed text-charcoal-700">
-      Buying or selling a home is one of life's biggest moments. My promise is simple: to listen
-      first, guide with patience, and treat your family the way I'd want mine to be treated. Whether
-      you're planting roots for the first time or beginning a new chapter, I'm here to walk with you.
-    </p>
-    <div class="mt-8 flex justify-center gap-4">
-      <Button href="/roots-and-new-beginnings" variant="outline">See Client Stories</Button>
+    <!-- Floating botanical accents -->
+    <svg class="animate-floaty absolute right-8 top-24 hidden h-16 w-16 text-sage-400/50 md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-11 1 6-1 12-2 18z" />
+      <path d="M11 20c0-4 2-8 6-10" />
+    </svg>
+    <svg class="animate-sway absolute bottom-16 left-6 hidden h-12 w-12 text-terracotta-300/60 lg:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M12 2c3 4 3 8 0 12-3-4-3-8 0-12z" />
+      <path d="M12 14v8" />
+    </svg>
+
+    <div class="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 sm:py-36 lg:px-8 lg:py-44">
+      <div class="max-w-2xl">
+        <p class="reveal text-sm font-medium uppercase tracking-widest text-sage-600">
+          Houston REALTOR®
+        </p>
+        <h1 class="reveal mt-4 font-serif text-4xl leading-tight text-sage-900 sm:text-5xl lg:text-6xl" style="transition-delay:0.1s">
+          Helping Houston families find a place to put down roots.
+        </h1>
+        <p class="reveal mt-6 max-w-xl text-lg text-charcoal-700" style="transition-delay:0.2s">
+          I'm Silvia Ly, a Texas REALTOR® who believes finding a home is about more than square
+          footage — it's about finding where your life can grow.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap gap-4" style="transition-delay:0.3s">
+          <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-sage-600 px-7 py-3 text-sm font-medium tracking-wide text-cream-50 transition-colors hover:bg-sage-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-500">
+            Talk with Silvia
+          </a>
+          <a href="#about" class="inline-flex items-center justify-center rounded-full border border-sage-600 px-7 py-3 text-sm font-medium tracking-wide text-sage-700 transition-colors hover:bg-sage-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-500">
+            Meet Silvia
+          </a>
+        </div>
+      </div>
+
+      <!-- Animated drawing leaf -->
+      <svg class="pointer-events-none absolute -right-6 bottom-0 hidden h-64 w-64 text-sage-500/30 lg:block" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path class="draw-path" d="M40 170 C 40 90, 110 40, 170 40 C 170 120, 110 170, 40 170 Z" />
+        <path class="draw-path" style="animation-delay:0.8s" d="M100 150 C 110 110, 130 90, 165 75" />
+      </svg>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="relative flex justify-center pb-8">
+      <a href="#about" class="animate-floaty text-sage-500 hover:text-sage-700" aria-label="Scroll to learn more">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </a>
     </div>
   </section>
 
-  <!-- Featured Client Stories -->
-  <section class="bg-sage-50/60 py-20">
+  <!-- ============================ ABOUT ============================ -->
+  <section id="about" class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="reveal reveal-left mx-auto w-full max-w-md">
+        <img
+          src="/images/placeholders/silvia-placeholder.svg"
+          alt="Portrait of Silvia Ly (placeholder)"
+          class="w-full rounded-2xl border border-sage-100 shadow-sm"
+        />
+      </div>
+      <div class="reveal reveal-right">
+        <p class="text-sm font-medium uppercase tracking-widest text-sage-600">Meet Silvia</p>
+        <h2 class="mt-3 font-serif text-3xl text-sage-900 sm:text-4xl">
+          A patient guide for one of life's biggest moments.
+        </h2>
+        <div class="mt-6 space-y-4 leading-relaxed text-charcoal-700">
+          <p>
+            I'm Silvia Ly, a Texas REALTOR® serving the greater Houston area. My approach is simple:
+            I listen first, move at your pace, and make sure you feel informed and cared for at every
+            step.
+          </p>
+          <p>
+            Over the years I've helped first-time buyers unlock their very first front door, growing
+            families find room to spread out, newcomers settle into a city that quickly feels like
+            home, and longtime homeowners begin a lighter new chapter. Every story is different, and
+            I take real pride in tailoring the journey to the people I'm helping.
+          </p>
+          <p>
+            When I'm not with clients, you'll usually find me tending to my plants, exploring
+            Houston's neighborhoods, or hunting down the best tacos in town.
+          </p>
+          <p class="text-sm italic text-charcoal-500">
+            (This bio is AI-generated sample copy — Silvia can replace it with her own words before
+            launch.)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q&A -->
+    <div class="mx-auto mt-16 max-w-3xl">
+      <dl class="grid gap-6 sm:grid-cols-2">
+        {
+          qa.map((item, i) => (
+            <div class="reveal rounded-2xl border border-sage-100 bg-cream-50 p-6 shadow-sm" style={`transition-delay:${i * 0.08}s`}>
+              <dt class="font-serif text-lg text-sage-800">{item.q}</dt>
+              <dd class="mt-2 text-sm leading-relaxed text-charcoal-700">{item.a}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <aside class="reveal mt-10 rounded-r-lg border-l-4 border-sage-500 bg-sage-50 py-5 pl-5 pr-6">
+        <div class="flex items-center gap-2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-sage-600" aria-hidden="true">
+            <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-11 1 6-1 12-2 18z" />
+            <path d="M11 20c0-4 2-8 6-10" />
+          </svg>
+          <span class="text-xs font-semibold uppercase tracking-wider text-sage-700">Silvia's Green Thumb Note</span>
+        </div>
+        <p class="mt-2 font-serif text-lg italic leading-relaxed text-sage-900">
+          A home, like a garden, does best when it's given a little light, a little care, and time to
+          grow. That's how I like to approach every move — patiently, and with heart.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================ STORIES ============================ -->
+  <section id="stories" class="bg-sage-50/60 py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">Roots & New Beginnings</h2>
-        <p class="mt-4 text-charcoal-700">
-          A few of the families I've had the honor of helping find their place in Houston.
+        <p class="reveal text-sm font-medium uppercase tracking-widest text-sage-600">Roots & New Beginnings</p>
+        <h2 class="reveal mt-3 font-serif text-3xl text-sage-900 sm:text-4xl" style="transition-delay:0.1s">
+          A few of the families I've had the honor of helping.
+        </h2>
+        <p class="reveal mt-4 text-charcoal-700" style="transition-delay:0.15s">
+          Every move is a story. Here are a few — shared with care and privacy in mind.
         </p>
       </div>
+
+      <!-- Filter buttons -->
+      <div class="reveal mt-10 flex flex-wrap justify-center gap-3" role="tablist" aria-label="Filter stories">
+        {
+          storyCategories.map((cat, i) => (
+            <button
+              type="button"
+              data-filter={cat}
+              class:list={[
+                'story-filter rounded-full border px-4 py-1.5 text-sm transition-colors',
+                i === 0
+                  ? 'border-sage-600 bg-sage-600 text-cream-50'
+                  : 'border-sage-300 text-sage-700 hover:bg-sage-100',
+              ]}
+            >
+              {cat}
+            </button>
+          ))
+        }
+      </div>
+
       <div class="mt-12 grid gap-8 md:grid-cols-3">
         {
-          stories.map((story) => (
-            <ClientStoryCard
-              displayName={story.data.displayName}
-              neighborhood={story.data.neighborhood}
-              category={story.data.category}
-              quote={story.data.quote}
-              image={story.data.image}
-            />
+          stories.map((s, i) => (
+            <article
+              class="story-card reveal reveal-scale group flex h-full flex-col overflow-hidden rounded-2xl border border-sage-100 bg-cream-50 shadow-sm transition-shadow hover:shadow-md"
+              data-category={s.data.category}
+              style={`transition-delay:${i * 0.1}s`}
+            >
+              <div class="aspect-[3/2] overflow-hidden bg-cream-100">
+                <img
+                  src={s.data.image ?? '/images/placeholders/client-placeholder.svg'}
+                  alt={`Story of ${s.data.displayName} in ${s.data.neighborhood}`}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <span class="mb-3 inline-block w-fit rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">
+                  {s.data.category}
+                </span>
+                <h3 class="font-serif text-xl text-sage-900">{s.data.displayName}</h3>
+                <p class="mt-1 text-sm text-charcoal-500">{s.data.neighborhood}</p>
+                <blockquote class="mt-4 flex-1 text-charcoal-700">
+                  <p class="italic leading-relaxed">&ldquo;{s.data.quote}&rdquo;</p>
+                </blockquote>
+              </div>
+            </article>
           ))
         }
       </div>
-      <div class="mt-10 text-center">
-        <Button href="/roots-and-new-beginnings" variant="primary">Read More Stories</Button>
-      </div>
+      <p class="reveal mt-8 text-center text-xs italic text-charcoal-500">
+        Client stories are fictional samples for demonstration and should be replaced with approved
+        content before launch.
+      </p>
     </div>
   </section>
 
-  <!-- Buy / Sell split -->
-  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-    <div class="grid gap-8 md:grid-cols-2">
-      <div class="rounded-2xl border border-sage-100 bg-cream-50 p-8 shadow-sm">
+  <!-- ============================ SERVICES (BUY & SELL) ============================ -->
+  <section id="services" class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="reveal font-serif text-3xl text-sage-900 sm:text-4xl">Buying &amp; selling, made calmer.</h2>
+      <p class="reveal mt-4 text-charcoal-700" style="transition-delay:0.1s">
+        Whichever side of the move you're on, you'll always know what's next.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-10 lg:grid-cols-2">
+      <!-- Buy -->
+      <div id="buy" class="reveal reveal-left rounded-3xl border border-sage-100 bg-sage-50/60 p-8">
         <h3 class="font-serif text-2xl text-sage-900">Buying a Home</h3>
-        <p class="mt-3 text-charcoal-700">
-          From your first tour to closing day, I'll help you find a home that fits your family and
-          your future — without the pressure.
+        <p class="mt-3 text-sm text-charcoal-700">
+          A supportive path from first hello to closing day — no pressure, always at your pace.
         </p>
-        <div class="mt-6">
-          <Button href="/buy-a-home" variant="outline">How I Help Buyers</Button>
+        <ol class="mt-6 space-y-4">
+          {
+            buySteps.map((step, i) => (
+              <li class="flex gap-4">
+                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-sage-600 text-sm font-medium text-cream-50">
+                  {i + 1}
+                </span>
+                <div>
+                  <p class="font-medium text-sage-900">{step.title}</p>
+                  <p class="mt-0.5 text-sm text-charcoal-700">{step.description}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          {
+            buyerTypes.map((t) => (
+              <div class="rounded-xl bg-cream-50 p-4">
+                <p class="font-serif text-sage-800">{t.title}</p>
+                <p class="mt-1 text-xs text-charcoal-600">{t.desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
-      <div class="rounded-2xl border border-terracotta-100 bg-terracotta-50 p-8 shadow-sm">
+
+      <!-- Sell -->
+      <div id="sell" class="reveal reveal-right rounded-3xl border border-terracotta-100 bg-terracotta-50 p-8">
         <h3 class="font-serif text-2xl text-terracotta-800">Selling Your Home</h3>
-        <p class="mt-3 text-charcoal-700">
-          A thoughtful, well-prepared plan to help your home shine and move on to its next chapter
-          with confidence.
+        <p class="mt-3 text-sm text-charcoal-700">
+          A thoughtful, well-prepared plan to sell with clarity and confidence.
         </p>
-        <div class="mt-6">
-          <Button href="/sell-your-home" variant="secondary">How I Help Sellers</Button>
+        <ol class="mt-6 space-y-4">
+          {
+            sellSteps.map((step, i) => (
+              <li class="flex gap-4">
+                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-terracotta-500 text-sm font-medium text-cream-50">
+                  {i + 1}
+                </span>
+                <div>
+                  <p class="font-medium text-terracotta-900">{step.title}</p>
+                  <p class="mt-0.5 text-sm text-charcoal-700">{step.description}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="mt-8 rounded-xl bg-cream-50 p-5">
+          <p class="font-serif text-terracotta-800">Complimentary Home Value Conversation</p>
+          <p class="mt-2 text-sm text-charcoal-700">
+            A relaxed, no-obligation chat about what your home may be worth today — including a
+            comparative market analysis prepared just for your property.
+          </p>
+          <a href="#contact" class="mt-4 inline-flex items-center justify-center rounded-full bg-terracotta-500 px-6 py-2.5 text-sm font-medium text-cream-50 transition-colors hover:bg-terracotta-600">
+            Request a Conversation
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Neighborhood preview -->
-  <section class="bg-cream-100/60 py-20">
+  <!-- ============================ NEIGHBORHOODS ============================ -->
+  <section id="neighborhoods" class="bg-cream-100/60 py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-serif text-3xl text-sage-900 sm:text-4xl">Houston Neighborhoods</h2>
-        <p class="mt-4 text-charcoal-700">A few of the communities I know and love.</p>
+        <h2 class="reveal font-serif text-3xl text-sage-900 sm:text-4xl">Houston Neighborhoods</h2>
+        <p class="reveal mt-4 text-charcoal-700" style="transition-delay:0.1s">
+          A few of the communities I know and love.
+        </p>
       </div>
+
       <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {
-          neighborhoods.map((n) => (
-            <NeighborhoodCard
-              name={n.data.name}
-              slug={n.slug}
-              intro={n.data.intro}
-              lifestyleHighlights={n.data.lifestyleHighlights}
-              silviaNote={n.data.silviaNote}
-              image={n.data.image}
-            />
+          neighborhoods.map((n, i) => (
+            <article
+              class="reveal group flex h-full flex-col overflow-hidden rounded-2xl border border-sage-100 bg-cream-50 shadow-sm transition-shadow hover:shadow-md"
+              style={`transition-delay:${(i % 3) * 0.1}s`}
+            >
+              <div class="aspect-[8/5] overflow-hidden bg-cream-100">
+                <img
+                  src={n.data.image ?? '/images/placeholders/neighborhood-placeholder.svg'}
+                  alt={`${n.data.name} neighborhood`}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <h3 class="font-serif text-2xl text-sage-900">{n.data.name}</h3>
+                <p class="mt-2 text-sm text-charcoal-700">{n.data.intro}</p>
+                <ul class="mt-4 space-y-1.5">
+                  {
+                    n.data.lifestyleHighlights.map((h) => (
+                      <li class="flex items-start gap-2 text-sm text-charcoal-700">
+                        <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sage-500" />
+                        {h}
+                      </li>
+                    ))
+                  }
+                </ul>
+                <p class="mt-4 border-l-2 border-sage-300 pl-3 text-sm italic text-sage-800">
+                  {n.data.silviaNote}
+                </p>
+                <div class="mt-6">
+                  <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-sage-600 px-5 py-2 text-xs font-medium text-cream-50 transition-colors hover:bg-sage-700">
+                    Ask Silvia about {n.data.name}
+                  </a>
+                </div>
+              </div>
+            </article>
           ))
         }
       </div>
     </div>
   </section>
 
-  <!-- Green Thumb Note -->
-  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-    <GreenThumbNote
-      text="A home, like a garden, does best when it's given a little light, a little care, and time to grow. That's how I like to approach every move — patiently, and with heart."
-    />
+  <!-- ============================ PLANT NOTES ============================ -->
+  <section id="notes" class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="reveal text-sm font-medium uppercase tracking-widest text-sage-600">Plant Notes</p>
+      <h2 class="reveal mt-3 font-serif text-3xl text-sage-900 sm:text-4xl" style="transition-delay:0.1s">
+        Small thoughts on homes, light, and growing things.
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      {
+        notes.map((note, i) => (
+          <article class="reveal reveal-scale flex h-full flex-col rounded-2xl border border-sage-100 bg-cream-50 p-6 shadow-sm" style={`transition-delay:${i * 0.1}s`}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="text-sage-500" aria-hidden="true">
+              <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-11 1 6-1 12-2 18z" />
+              <path d="M11 20c0-4 2-8 6-10" />
+            </svg>
+            <span class="mt-4 text-xs font-medium uppercase tracking-wider text-sage-600">{note.data.category}</span>
+            <h3 class="mt-2 font-serif text-lg leading-snug text-sage-900">{note.data.title}</h3>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-charcoal-700">{note.data.excerpt}</p>
+            <time class="mt-4 text-xs text-charcoal-400" datetime={new Date(note.data.date).toISOString()}>
+              {new Date(note.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="bg-sage-800 py-20 text-center text-cream-50">
-    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif text-3xl sm:text-4xl">Let's talk about what's next.</h2>
-      <p class="mt-4 text-cream-200">
-        Whether you're ready to start or just have a question, I'd love to hear from you.
-      </p>
-      <div class="mt-8 flex justify-center gap-4">
-        <Button href="/contact" variant="primary">Talk with Silvia</Button>
-        <Button
-          href={siteConfig.contact.har}
-          variant="outline"
-          class="border-cream-100 text-cream-50 hover:bg-sage-700"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          HAR Profile
-        </Button>
+  <!-- ============================ CONTACT ============================ -->
+  <section id="contact" class="bg-sage-800 py-24 text-cream-50">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="reveal font-serif text-3xl sm:text-4xl">Let's talk about what's next.</h2>
+        <p class="reveal mt-4 text-cream-200" style="transition-delay:0.1s">
+          Whether you're ready to start or just have a question, I'd love to hear from you.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-12 lg:grid-cols-3">
+        <div class="reveal reveal-left rounded-2xl bg-cream-50 p-6 text-charcoal-800 shadow-sm lg:col-span-2 sm:p-8">
+          <h3 class="font-serif text-2xl text-sage-900">Send a message</h3>
+          <div class="mt-6"><ContactForm /></div>
+        </div>
+
+        <aside class="reveal reveal-right rounded-2xl border border-sage-600 bg-sage-700/40 p-6 sm:p-8">
+          <h3 class="font-serif text-xl text-cream-50">Other ways to reach me</h3>
+          <dl class="mt-6 space-y-5 text-sm">
+            <div>
+              <dt class="font-medium text-cream-200">Phone</dt>
+              <dd class="mt-1">
+                <a href={telHref} class="text-cream-50 underline underline-offset-4 hover:text-cream-100">
+                  {siteConfig.contact.phone}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-cream-200">Email</dt>
+              <dd class="mt-1 break-words">
+                <a href={mailHref} class="text-cream-50 underline underline-offset-4 hover:text-cream-100">
+                  {siteConfig.contact.email}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-cream-200">HAR Profile</dt>
+              <dd class="mt-1">
+                <a href={siteConfig.contact.har} target="_blank" rel="noopener noreferrer" class="text-cream-50 underline underline-offset-4 hover:text-cream-100">
+                  View on HAR.com
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-cream-200">Schedule a chat</dt>
+              <dd class="mt-1">
+                <a href={siteConfig.contact.calendar} target="_blank" rel="noopener noreferrer" class="text-cream-50 underline underline-offset-4 hover:text-cream-100">
+                  Book a time to talk
+                </a>
+              </dd>
+            </div>
+          </dl>
+          <p class="mt-6 text-xs text-cream-300">
+            I try to respond to every message personally, usually within one business day.
+          </p>
+        </aside>
       </div>
     </div>
   </section>
 </Layout>
+
+<script>
+  // Hero parallax
+  const hero = document.getElementById('hero-parallax');
+  const onParallax = () => {
+    const y = window.scrollY;
+    if (hero && y < window.innerHeight) {
+      hero.style.transform = `translateY(${y * 0.35}px)`;
+    }
+  };
+  window.addEventListener('scroll', onParallax, { passive: true });
+  onParallax();
+
+  // Story filtering
+  const filters = document.querySelectorAll<HTMLButtonElement>('.story-filter');
+  const cards = document.querySelectorAll<HTMLElement>('.story-card');
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const value = btn.getAttribute('data-filter');
+      filters.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('bg-sage-600', active);
+        b.classList.toggle('text-cream-50', active);
+        b.classList.toggle('border-sage-600', active);
+        b.classList.toggle('border-sage-300', !active);
+        b.classList.toggle('text-sage-700', !active);
+      });
+      cards.forEach((card) => {
+        const show = value === 'All' || card.getAttribute('data-category') === value;
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>

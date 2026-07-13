@@ -29,7 +29,7 @@ import { navLinks } from '../config/site';
       </svg>
     </button>
   </div>
-  <nav class="flex flex-col px-5 py-6">
+  <nav class="flex flex-col px-5 py-6" data-menu-nav>
     {
       navLinks.map((link) => (
         <a
@@ -66,5 +66,10 @@ import { navLinks } from '../config/site';
   overlay?.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeMenu();
+  });
+
+  // Close the drawer when a section link is tapped (single-page anchors)
+  menu?.querySelectorAll('[data-menu-nav] a').forEach((a) => {
+    a.addEventListener('click', closeMenu);
   });
 </script>

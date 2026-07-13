@@ -31,13 +31,13 @@ export const siteConfig = {
 
 export type SiteConfig = typeof siteConfig;
 
+// Single-page navigation — every link smooth-scrolls to a section on the home page.
 export const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Meet Silvia', href: '/meet-silvia' },
-  { label: 'Roots & New Beginnings', href: '/roots-and-new-beginnings' },
-  { label: 'Buy', href: '/buy-a-home' },
-  { label: 'Sell', href: '/sell-your-home' },
-  { label: 'Neighborhoods', href: '/houston-neighborhoods' },
-  { label: 'Plant Notes', href: '/plant-notes' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Home', href: '#top' },
+  { label: 'Meet Silvia', href: '#about' },
+  { label: 'Stories', href: '#stories' },
+  { label: 'Buy & Sell', href: '#services' },
+  { label: 'Neighborhoods', href: '#neighborhoods' },
+  { label: 'Notes', href: '#notes' },
+  { label: 'Contact', href: '#contact' },
 ] as const;

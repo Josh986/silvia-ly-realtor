@@ -41,10 +41,85 @@ const { title, description, image } = Astro.props;
     </main>
     <Footer />
 
+    <!-- Back to top -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 right-6 z-30 flex h-11 w-11 translate-y-4 items-center justify-center rounded-full bg-sage-600 text-cream-50 opacity-0 shadow-lg transition-all duration-300 hover:bg-sage-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-500"
+      aria-label="Back to top"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5" />
+        <polyline points="5 12 12 5 19 12" />
+      </svg>
+    </button>
+
     <style is:global>
       html {
         scroll-padding-top: 5rem;
       }
+
+      /* ---- Scroll-reveal motion system ---- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.reveal-left {
+        transform: translateX(-32px);
+      }
+      .reveal.reveal-right {
+        transform: translateX(32px);
+      }
+      .reveal.reveal-scale {
+        transform: scale(0.94);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+
+      /* Gentle botanical sway / float */
+      @keyframes sway {
+        0%,
+        100% {
+          transform: rotate(-4deg);
+        }
+        50% {
+          transform: rotate(4deg);
+        }
+      }
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-14px);
+        }
+      }
+      .animate-sway {
+        animation: sway 7s ease-in-out infinite;
+        transform-origin: bottom center;
+      }
+      .animate-floaty {
+        animation: floaty 8s ease-in-out infinite;
+      }
+
+      /* SVG draw-in */
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      .draw-path {
+        stroke-dasharray: 600;
+        stroke-dashoffset: 600;
+        animation: draw 2.6s ease forwards 0.3s;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
@@ -57,7 +132,43 @@ const { title, description, image } = Astro.props;
           transition-duration: 0.01ms !important;
           scroll-behavior: auto !important;
         }
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
       }
     </style>
+
+    <script>
+      // Reveal-on-scroll for any element with .reveal
+      const revealEls = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      // Back-to-top button
+      const toTop = document.getElementById('back-to-top');
+      const toggleToTop = () => {
+        if (window.scrollY > 600) {
+          toTop?.classList.remove('opacity-0', 'translate-y-4');
+        } else {
+          toTop?.classList.add('opacity-0', 'translate-y-4');
+        }
+      };
+      window.addEventListener('scroll', toggleToTop, { passive: true });
+      toggleToTop();
+      toTop?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    </script>
   </body>
 </html>
